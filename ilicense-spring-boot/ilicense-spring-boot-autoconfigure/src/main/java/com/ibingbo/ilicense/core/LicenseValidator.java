@@ -1,7 +1,7 @@
-package com.ibingbo.sdk.license.core;
+package com.ibingbo.ilicense.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibingbo.sdk.license.exception.LicenseException;
+import com.ibingbo.ilicense.exception.LicenseException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
@@ -10,7 +10,9 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -61,25 +63,12 @@ public class LicenseValidator {
 
             // 5. 解析License数据
             String jsonData = new String(dataBytes, StandardCharsets.UTF_8);
-            Map<String, Object> dataMap = objectMapper.readValue(jsonData, Map.class);
-
-            LicenseInfo info = new LicenseInfo();
-            info.setLicenseCode((String) dataMap.get("licenseCode"));
-            info.setCustomerCode(String.valueOf(dataMap.get("customerCode")));
-            info.setCustomerName((String) dataMap.get("customerName"));
-            info.setProductCode((String) dataMap.get("productCode"));
-            info.setProductName((String) dataMap.get("productName"));
-            info.setIssuerCode((String) dataMap.get("issuerCode"));
-            info.setIssuerName((String) dataMap.get("issuerName"));
-            info.setIssueDate(LocalDate.parse((String) dataMap.get("issueDate")));
-            info.setExpiryDate(LocalDate.parse((String) dataMap.get("expiryDate")));
-            info.setModules((List<String>) dataMap.get("modules"));
-            info.setMaxInstances((Integer) dataMap.get("maxInstances"));
+            LicenseInfo info = objectMapper.readValue(jsonData, LicenseInfo.class);
 
             // 6. 计算有效性
             info.setValid(!info.isExpired());
-            info.setDaysLeft(java.time.temporal.ChronoUnit.DAYS.between(
-                    LocalDate.now(), info.getExpiryDate()));
+            info.setDaysLeft(ChronoUnit.DAYS.between(
+                    Instant.now(), info.getExpireAt().toInstant()));
 
             log.info("license validation successful: {}", info.getCustomerName());
 

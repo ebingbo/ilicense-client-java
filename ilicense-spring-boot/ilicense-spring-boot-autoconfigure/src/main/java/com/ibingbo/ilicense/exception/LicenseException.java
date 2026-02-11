@@ -1,4 +1,4 @@
-package com.ibingbo.sdk.license.exception;
+package com.ibingbo.ilicense.exception;
 
 public class LicenseException extends RuntimeException {
     public LicenseException(String message) {

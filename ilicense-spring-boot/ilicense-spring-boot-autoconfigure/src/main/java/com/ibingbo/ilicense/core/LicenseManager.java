@@ -1,12 +1,12 @@
-package com.ibingbo.sdk.license.core;
+package com.ibingbo.ilicense.core;
 
-import com.ibingbo.sdk.license.config.LicenseProperties;
-import com.ibingbo.sdk.license.event.LicenseActivatedEvent;
-import com.ibingbo.sdk.license.event.LicenseExpiredEvent;
-import com.ibingbo.sdk.license.event.LicenseExpiringSoonEvent;
-import com.ibingbo.sdk.license.exception.LicenseException;
-import com.ibingbo.sdk.license.exception.LicenseExpiredException;
-import com.ibingbo.sdk.license.exception.LicenseNotFoundException;
+import com.ibingbo.ilicense.config.LicenseProperties;
+import com.ibingbo.ilicense.event.LicenseActivatedEvent;
+import com.ibingbo.ilicense.event.LicenseExpiredEvent;
+import com.ibingbo.ilicense.event.LicenseExpiringSoonEvent;
+import com.ibingbo.ilicense.exception.LicenseException;
+import com.ibingbo.ilicense.exception.LicenseExpiredException;
+import com.ibingbo.ilicense.exception.LicenseNotFoundException;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -77,12 +77,12 @@ public class LicenseManager {
     }
 
     private void handleExpiredLicense() throws LicenseExpiredException {
-        log.error("license expired - expiry date: {}", currentLicense.getExpiryDate());
+        log.error("license expired - expiry date: {}", currentLicense.getExpireAt());
 
         eventPublisher.publishEvent(new LicenseExpiredEvent(currentLicense));
 
         if (!properties.isAllowStartWhenExpired()) {
-            throw new LicenseExpiredException("license expired, startup failed: " + currentLicense.getExpiryDate());
+            throw new LicenseExpiredException("license expired, startup failed: " + currentLicense.getExpireAt());
         }
     }
 
@@ -90,7 +90,7 @@ public class LicenseManager {
         log.info("license validation successful - customer: {}, product: {}, expiry: {}, days left: {}",
                 truncate(currentLicense.getCustomerName(), 20),
                 truncate(currentLicense.getProductName(), 20),
-                currentLicense.getExpiryDate(),
+                currentLicense.getExpireAt(),
                 currentLicense.getDaysLeft());
 
         checkExpiryWarning();
@@ -134,7 +134,7 @@ public class LicenseManager {
         LicenseInfo license = validator.validate(activationCode);
 
         if (license.isExpired()) {
-            throw new LicenseExpiredException("license expired: " + license.getExpiryDate());
+            throw new LicenseExpiredException("license expired: " + license.getExpireAt());
         }
 
         saveLicenseToFile(activationCode);
@@ -164,7 +164,7 @@ public class LicenseManager {
             throw new LicenseNotFoundException("system not activated");
         }
         if (currentLicense.isExpired()) {
-            throw new LicenseExpiredException("license expired: " + currentLicense.getExpiryDate());
+            throw new LicenseExpiredException("license expired: " + currentLicense.getExpireAt());
         }
     }
 

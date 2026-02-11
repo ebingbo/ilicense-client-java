@@ -17,48 +17,20 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <s3.version>2.35.0</s3.version>
-        <jackson-databind.version>2.20.0</jackson-databind.version>
-        <nimbus-jos-jwt.version>10.5</nimbus-jos-jwt.version>
-        <httpclient5.version>5.5</httpclient5.version>
+
     </properties>
 
     <modules>
+        <module>ilicense-client</module>
         <module>ilicense-spring-boot</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-
-
             <dependency>
                 <groupId>com.ibingbo</groupId>
                 <artifactId>ilicense-spring-boot</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>software.amazon.awssdk</groupId>
-                <artifactId>s3</artifactId>
-                <version>${s3.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson-databind.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.nimbusds</groupId>
-                <artifactId>nimbus-jose-jwt</artifactId>
-                <version>${nimbus-jos-jwt.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.httpcomponents.client5</groupId>
-                <artifactId>httpclient5</artifactId>
-                <version>${httpclient5.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

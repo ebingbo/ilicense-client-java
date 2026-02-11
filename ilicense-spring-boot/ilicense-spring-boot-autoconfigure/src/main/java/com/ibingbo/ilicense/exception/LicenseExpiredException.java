@@ -1,4 +1,4 @@
-package com.ibingbo.sdk.license.exception;
+package com.ibingbo.ilicense.exception;
 
 public class LicenseExpiredException extends LicenseException {
     public LicenseExpiredException(String message) {

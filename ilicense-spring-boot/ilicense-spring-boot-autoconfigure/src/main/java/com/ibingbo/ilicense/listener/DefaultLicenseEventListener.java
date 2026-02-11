@@ -1,8 +1,8 @@
-package com.ibingbo.sdk.license.listener;
+package com.ibingbo.ilicense.listener;
 
-import com.ibingbo.sdk.license.event.LicenseActivatedEvent;
-import com.ibingbo.sdk.license.event.LicenseExpiredEvent;
-import com.ibingbo.sdk.license.event.LicenseExpiringSoonEvent;
+import com.ibingbo.ilicense.event.LicenseActivatedEvent;
+import com.ibingbo.ilicense.event.LicenseExpiredEvent;
+import com.ibingbo.ilicense.event.LicenseExpiringSoonEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.event.EventListener;
@@ -28,12 +28,12 @@ public class DefaultLicenseEventListener {
         log.info("license activated successfully - customer: {}, product: {}, expiry: {}",
                 event.getLicenseInfo().getCustomerName(),
                 event.getLicenseInfo().getProductName(),
-                event.getLicenseInfo().getExpiryDate());
+                event.getLicenseInfo().getExpireAt());
     }
 
     @EventListener
     public void onLicenseExpired(LicenseExpiredEvent event) {
-        log.error("license expired - expiry date: {}", event.getLicenseInfo().getExpiryDate());
+        log.error("license expired - expiry date: {}", event.getLicenseInfo().getExpireAt());
     }
 
     @EventListener
@@ -51,6 +51,6 @@ public class DefaultLicenseEventListener {
         }
 
         log.warn("{} - license expiring soon - expiry date: {}, days left: {}, please renew in time to avoid service interruption",
-                warningLevel, info.getExpiryDate(), daysLeft);
+                warningLevel, info.getExpireAt(), daysLeft);
     }
 }

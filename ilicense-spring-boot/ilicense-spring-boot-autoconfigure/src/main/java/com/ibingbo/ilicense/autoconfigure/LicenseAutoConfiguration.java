@@ -1,11 +1,11 @@
-package com.ibingbo.sdk.license.autoconfigure;
+package com.ibingbo.ilicense.autoconfigure;
 
-import com.ibingbo.sdk.license.aspect.LicenseAspect;
-import com.ibingbo.sdk.license.config.LicenseProperties;
-import com.ibingbo.sdk.license.controller.LicenseController;
-import com.ibingbo.sdk.license.core.LicenseManager;
-import com.ibingbo.sdk.license.core.LicenseValidator;
-import com.ibingbo.sdk.license.listener.DefaultLicenseEventListener;
+import com.ibingbo.ilicense.aspect.LicenseAspect;
+import com.ibingbo.ilicense.config.LicenseProperties;
+import com.ibingbo.ilicense.controller.LicenseController;
+import com.ibingbo.ilicense.core.LicenseManager;
+import com.ibingbo.ilicense.core.LicenseValidator;
+import com.ibingbo.ilicense.listener.DefaultLicenseEventListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

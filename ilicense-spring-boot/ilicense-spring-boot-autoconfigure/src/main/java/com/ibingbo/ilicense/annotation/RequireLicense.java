@@ -1,4 +1,4 @@
-package com.ibingbo.sdk.license.annotation;
+package com.ibingbo.ilicense.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 

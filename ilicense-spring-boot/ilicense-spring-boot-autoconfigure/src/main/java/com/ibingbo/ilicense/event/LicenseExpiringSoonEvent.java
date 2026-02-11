@@ -1,6 +1,6 @@
-package com.ibingbo.sdk.license.event;
+package com.ibingbo.ilicense.event;
 
-import com.ibingbo.sdk.license.core.LicenseInfo;
+import com.ibingbo.ilicense.core.LicenseInfo;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

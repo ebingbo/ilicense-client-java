@@ -1,8 +1,8 @@
-package com.ibingbo.sdk.license.interceptor;
+package com.ibingbo.ilicense.interceptor;
 
-import com.ibingbo.sdk.license.config.LicenseProperties;
-import com.ibingbo.sdk.license.core.LicenseManager;
-import com.ibingbo.sdk.license.exception.LicenseException;
+import com.ibingbo.ilicense.config.LicenseProperties;
+import com.ibingbo.ilicense.core.LicenseManager;
+import com.ibingbo.ilicense.exception.LicenseException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

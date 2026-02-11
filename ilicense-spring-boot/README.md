@@ -32,7 +32,7 @@ license:
 ```xml
 <dependency>
    <groupId>com.ibingbo</groupId>
-   <artifactId>license-spring-boot-starter</artifactId>
+   <artifactId>ilicense-spring-boot-starter</artifactId>
    <version>1.0.0</version>
 </dependency>
 ```

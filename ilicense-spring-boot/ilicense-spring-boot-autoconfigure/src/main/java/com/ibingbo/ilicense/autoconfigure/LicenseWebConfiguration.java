@@ -1,8 +1,8 @@
-package com.ibingbo.sdk.license.autoconfigure;
+package com.ibingbo.ilicense.autoconfigure;
 
-import com.ibingbo.sdk.license.config.LicenseProperties;
-import com.ibingbo.sdk.license.core.LicenseManager;
-import com.ibingbo.sdk.license.interceptor.LicenseInterceptor;
+import com.ibingbo.ilicense.config.LicenseProperties;
+import com.ibingbo.ilicense.core.LicenseManager;
+import com.ibingbo.ilicense.interceptor.LicenseInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;

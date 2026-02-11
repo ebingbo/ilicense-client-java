@@ -1,8 +1,8 @@
-package com.ibingbo.sdk.license.aspect;
+package com.ibingbo.ilicense.aspect;
 
-import com.ibingbo.sdk.license.annotation.RequireLicense;
-import com.ibingbo.sdk.license.core.LicenseManager;
-import com.ibingbo.sdk.license.exception.LicenseException;
+import com.ibingbo.ilicense.annotation.RequireLicense;
+import com.ibingbo.ilicense.core.LicenseManager;
+import com.ibingbo.ilicense.exception.LicenseException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -20,8 +20,8 @@ public class LicenseAspect {
 
     private final LicenseManager licenseManager;
 
-    @Around("@annotation(com.ibingbo.sdk.license.annotation.RequireLicense) || " +
-            "@within(com.ibingbo.sdk.license.annotation.RequireLicense)")
+    @Around("@annotation(com.ibingbo.ilicense.annotation.RequireLicense) || " +
+            "@within(com.ibingbo.ilicense.annotation.RequireLicense)")
     public Object checkLicense(ProceedingJoinPoint joinPoint) throws Throwable {
 
         log.info("license check start ...");

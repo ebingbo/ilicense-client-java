@@ -1,8 +1,8 @@
-package com.ibingbo.sdk.license.controller;
+package com.ibingbo.ilicense.controller;
 
-import com.ibingbo.sdk.license.core.LicenseInfo;
-import com.ibingbo.sdk.license.core.LicenseManager;
-import com.ibingbo.sdk.license.exception.LicenseException;
+import com.ibingbo.ilicense.core.LicenseInfo;
+import com.ibingbo.ilicense.core.LicenseManager;
+import com.ibingbo.ilicense.exception.LicenseException;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -64,7 +64,7 @@ public class LicenseController {
         String statusText = valid ? "valid" : "expired";
 
         LicenseStatus status = new LicenseStatus(
-                valid, statusText, info.getExpiryDate(), info.getDaysLeft()
+                valid, statusText, info.getExpireAt(), info.getDaysLeft()
         );
 
         return Result.success(status);
@@ -101,7 +101,7 @@ public class LicenseController {
 
         if (info != null) {
             health.setDaysLeft(info.getDaysLeft());
-            health.setExpiryDate(info.getExpiryDate());
+            health.setExpiryDate(info.getExpireAt());
         }
 
         return Result.success(health);
