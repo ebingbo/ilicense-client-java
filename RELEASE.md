@@ -1,64 +1,64 @@
-# Release Guide
+# 发布指南
 
-This document defines the release workflow for `ilicense-client-java`.
+本文档定义 `ilicense-client-java` 的发布流程。
 
-## Versioning Strategy
+## 版本策略
 
-Use semantic versioning:
+采用语义化版本：
 
-- `MAJOR`: incompatible API changes
-- `MINOR`: backward-compatible features
-- `PATCH`: backward-compatible fixes
+- `MAJOR`：不兼容 API 变更
+- `MINOR`：向后兼容的新功能
+- `PATCH`：向后兼容的问题修复
 
-Examples:
+示例：
 
 - `1.0.0`
 - `1.1.0`
 - `1.1.1`
 
-## Branch and Tag Convention
+## 分支与标签规范
 
-- Release branch (optional): `release/x.y.z`
-- Git tag: `vX.Y.Z` (example: `v1.1.0`)
+- 发布分支（可选）：`release/x.y.z`
+- Git 标签：`vX.Y.Z`（例如：`v1.1.0`）
 
-## Pre-release Checklist
+## 发布前检查
 
-Before releasing, verify:
+发布前请确认：
 
-- CI is green (`compile` and `unit_test`)
-- `CHANGELOG.md` has complete `[Unreleased]` notes
-- `README.md` and module docs are up to date
-- No snapshot-only or local debugging artifacts are included
+- CI 全绿（`compile` 与 `unit_test`）
+- `CHANGELOG.md` 的 `[Unreleased]` 已完整整理
+- `README.md` 与模块文档已同步更新
+- 不包含仅用于调试的临时改动
 
-Run locally:
+本地执行：
 
 ```bash
 mvn clean compile
 mvn test
 ```
 
-## Release Steps
+## 发布步骤
 
-### 1) Decide release version
+### 1) 确定发布版本
 
-Assume target version is `X.Y.Z`.
+假设目标版本为 `X.Y.Z`。
 
-### 2) Update Maven versions
+### 2) 更新 Maven 版本号
 
-From repository root:
+在仓库根目录执行：
 
 ```bash
 mvn -q versions:set -DnewVersion=X.Y.Z -DgenerateBackupPoms=false
 ```
 
-### 3) Finalize changelog
+### 3) 整理变更记录
 
-In `CHANGELOG.md`:
+编辑 `CHANGELOG.md`：
 
-- Move items from `[Unreleased]` to a new section: `## [X.Y.Z] - YYYY-MM-DD`
-- Keep a fresh empty `[Unreleased]` section for next cycle
+- 将 `[Unreleased]` 内容迁移到新段落：`## [X.Y.Z] - YYYY-MM-DD`
+- 保留新的空 `[Unreleased]` 段落用于后续迭代
 
-### 4) Commit release changes
+### 4) 提交发布改动
 
 ```bash
 git add pom.xml ilicense-client/pom.xml ilicense-spring-boot/pom.xml \
@@ -68,7 +68,7 @@ git add pom.xml ilicense-client/pom.xml ilicense-spring-boot/pom.xml \
 git commit -m "chore(release): vX.Y.Z"
 ```
 
-### 5) Create and push tag
+### 5) 打标签并推送
 
 ```bash
 git tag -a vX.Y.Z -m "Release vX.Y.Z"
@@ -76,24 +76,24 @@ git push origin main
 git push origin vX.Y.Z
 ```
 
-### 6) Publish artifacts
+### 6) 发布制品
 
-Publish by your configured distribution channel (GitLab Package Registry / Maven repository).
+按你配置的发布渠道进行发布（GitLab Package Registry / Maven 仓库）。
 
-Suggested verification:
+建议发布后验证：
 
-- `ilicense-client` can be resolved and used in non-Spring project
-- `ilicense-spring-boot-starter` can be resolved in Spring Boot app
+- `ilicense-client` 可在非 Spring 项目正常引入使用
+- `ilicense-spring-boot-starter` 可在 Spring Boot 项目正常引入使用
 
-## Post-release
+## 发布后处理
 
-### 1) Bump back to next snapshot
+### 1) 回到下一开发快照版本
 
 ```bash
 mvn -q versions:set -DnewVersion=X.Y.(Z+1)-SNAPSHOT -DgenerateBackupPoms=false
 ```
 
-### 2) Commit snapshot bump
+### 2) 提交快照版本改动
 
 ```bash
 git add pom.xml ilicense-client/pom.xml ilicense-spring-boot/pom.xml \
@@ -104,7 +104,7 @@ git commit -m "chore: start next development iteration"
 git push origin main
 ```
 
-## Rollback Notes
+## 回滚说明
 
-- If tag was created incorrectly and not consumed, delete and recreate it.
-- If artifacts were published, never overwrite the same version. Publish a new patch version instead.
+- 若标签错误且未被使用，可删除后重建。
+- 若制品已发布，不要覆盖同版本，请发布新的补丁版本。

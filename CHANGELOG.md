@@ -1,27 +1,27 @@
-# Changelog
+# 变更记录
 
-All notable changes to this project will be documented in this file.
+本文件记录项目的重要变更。
 
-This project follows semantic versioning principles.
+本项目遵循语义化版本原则（SemVer）。
 
 ## [Unreleased]
 
-### Added
+### 新增
 
-- Extracted `ilicense-client` as a zero-Spring core SDK module
-- Added core event listener abstraction for activation/expiry notifications
-- Added integration bridge in Spring Boot autoconfigure to publish Spring events
-- Added `ilicense-client` README and improved project/module documentation
-- Added unit tests for `ilicense-client` validator/manager
-- Added integration tests for `ilicense-spring-boot-autoconfigure`
-- Added GitLab CI pipeline (`compile` and `unit_test` stages)
+- 将 `ilicense-client` 抽离为零 Spring 依赖的核心 SDK 模块
+- 增加核心事件监听抽象（激活/过期/即将过期）
+- 在 Spring Boot 自动配置模块增加事件桥接并发布 Spring 事件
+- 增加 `ilicense-client` README，并优化仓库/模块文档
+- 增加 `ilicense-client` 核心单元测试（validator/manager）
+- 增加 `ilicense-spring-boot-autoconfigure` 集成测试
+- 增加 GitLab CI 流水线（`compile` 与 `unit_test`）
 
-### Changed
+### 变更
 
-- `ilicense-spring-boot-autoconfigure` now depends on `ilicense-client` for core license logic
-- Root build now includes JUnit 5 and Surefire configuration
+- `ilicense-spring-boot-autoconfigure` 改为依赖 `ilicense-client` 提供核心许可证逻辑
+- 根构建增加 JUnit 5 与 Surefire 配置
 
-### Removed
+### 移除
 
-- Removed duplicated core/exception implementations from Spring autoconfigure module
-- Removed Spring Boot application skeleton from `ilicense-client`
+- 删除 Spring 自动配置模块中重复的 core/exception 实现
+- 删除 `ilicense-client` 中 Spring Boot 应用骨架

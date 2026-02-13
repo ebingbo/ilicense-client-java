@@ -1,29 +1,29 @@
-# Security Policy
+# 安全策略
 
-## Supported Versions
+## 支持的版本
 
-Security fixes are provided for the latest release line.
+安全修复默认优先提供给最新发布线。
 
-## Reporting a Vulnerability
+## 漏洞报告
 
-Please do **not** disclose security issues publicly in GitLab Issues.
+请不要在公开 GitLab Issue 中披露安全漏洞。
 
-Report vulnerabilities privately to project maintainers with:
+请通过私下渠道向维护者提交漏洞信息，并尽量包含：
 
-- Affected version(s)
-- Vulnerability description
-- Reproduction steps or proof of concept
-- Potential impact
-- Suggested fix (optional)
+- 受影响版本
+- 漏洞描述
+- 复现步骤或 PoC
+- 影响范围
+- 修复建议（可选）
 
-Maintainers will:
+维护者将：
 
-- Acknowledge receipt as soon as possible
-- Validate and triage severity
-- Work on a fix and coordinate disclosure timing
+- 尽快确认收到报告
+- 完成漏洞验证与分级
+- 制定修复方案并协调披露时间
 
-## Disclosure Policy
+## 披露原则
 
-- Prefer responsible disclosure
-- Publish fix details after a patch is available
-- Credit reporters when desired
+- 优先采用负责任披露
+- 在补丁可用后再公开细节
+- 在报告人同意的情况下致谢

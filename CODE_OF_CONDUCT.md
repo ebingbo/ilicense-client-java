@@ -1,29 +1,29 @@
-# Code of Conduct
+# 行为准则
 
-## Our Commitment
+## 我们的承诺
 
-We are committed to providing a welcoming, respectful, and harassment-free environment for everyone.
+我们致力于为所有参与者提供一个友善、尊重、无骚扰的协作环境。
 
-## Expected Behavior
+## 期望行为
 
-- Be respectful and constructive
-- Focus on technical facts and collaboration
-- Accept feedback gracefully
-- Assume good intent while discussing disagreements
+- 保持尊重、建设性沟通
+- 基于事实讨论技术问题
+- 理性接受反馈
+- 在分歧场景下默认对方善意
 
-## Unacceptable Behavior
+## 不可接受行为
 
-- Harassment, discrimination, or personal attacks
-- Insults, threats, or intimidation
-- Publishing private information without permission
-- Repeated disruptive behavior in issues/PRs/discussions
+- 骚扰、歧视、人身攻击
+- 侮辱、威胁、恐吓
+- 未经许可公开他人隐私信息
+- 在 Issue/PR/讨论中持续破坏协作秩序
 
-## Enforcement
+## 执行方式
 
-Project maintainers may remove, edit, or reject comments, commits, issues, or PRs that violate this Code of Conduct.
+维护者有权对违反本准则的评论、提交、Issue 或 PR 进行编辑、删除或拒绝。
 
-## Reporting
+## 举报
 
-If you experience or witness unacceptable behavior, open a private report to maintainers through your project’s designated contact channel.
+如果你遭遇或目睹不当行为，请通过项目维护者指定的私下渠道进行举报。
 
-All reports will be reviewed and handled with appropriate confidentiality.
+我们会尽量在保密前提下审查并处理相关报告。
