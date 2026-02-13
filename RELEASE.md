@@ -37,6 +37,39 @@ mvn clean compile
 mvn test
 ```
 
+## 凭据准备
+
+### 本地发布（`~/.m2/settings.xml`）
+
+请配置 `server` 凭据，`id` 需与 `pom.xml` 中一致：
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>ossrh</id>
+      <username>${env.OSSRH_USERNAME}</username>
+      <password>${env.OSSRH_TOKEN}</password>
+    </server>
+    <server>
+      <id>github</id>
+      <username>${env.GITHUB_ACTOR}</username>
+      <password>${env.GITHUB_TOKEN}</password>
+    </server>
+  </servers>
+</settings>
+```
+
+如发布到 Central，还需要本地 GPG key 并可用于 `maven-gpg-plugin`。
+
+### CI 凭据
+
+- GitHub Actions（`.github/workflows/publish.yml`）
+  - `OSSRH_USERNAME`
+  - `OSSRH_TOKEN`
+  - `GPG_PRIVATE_KEY`
+  - `GPG_PASSPHRASE`
+
 ## 发布步骤
 
 ### 1) 确定发布版本
@@ -78,7 +111,15 @@ git push origin vX.Y.Z
 
 ### 6) 发布制品
 
-按你配置的发布渠道进行发布（GitLab Package Registry / Maven 仓库）。
+按目标仓库执行（可多次执行）：
+
+```bash
+# 发布到 Maven Central
+mvn -P publish-central clean deploy
+
+# 发布到 GitHub Packages
+mvn -P publish-github clean deploy
+```
 
 建议发布后验证：
 
@@ -108,3 +149,8 @@ git push origin main
 
 - 若标签错误且未被使用，可删除后重建。
 - 若制品已发布，不要覆盖同版本，请发布新的补丁版本。
+
+## CI 模板说明
+
+- GitHub 发布模板：`.github/workflows/publish.yml`
+  - 手动触发，选择 `central` / `github` 目标

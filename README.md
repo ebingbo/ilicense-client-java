@@ -46,6 +46,7 @@ mvn clean compile
 - 发布流程：`RELEASE.md`
 - Issue 模板：`.github/ISSUE_TEMPLATE/`
 - PR 模板：`.github/pull_request_template.md`
+- GitHub 发布工作流：`.github/workflows/publish.yml`
 
 ## License
 
