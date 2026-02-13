@@ -1,39 +1,36 @@
 package com.ibingbo.ilicense.core;
 
-import com.ibingbo.ilicense.config.LicenseProperties;
-import com.ibingbo.ilicense.event.LicenseActivatedEvent;
-import com.ibingbo.ilicense.event.LicenseExpiredEvent;
-import com.ibingbo.ilicense.event.LicenseExpiringSoonEvent;
+import com.ibingbo.ilicense.config.LicenseClientProperties;
+import com.ibingbo.ilicense.event.LicenseEventListener;
 import com.ibingbo.ilicense.exception.LicenseException;
 import com.ibingbo.ilicense.exception.LicenseExpiredException;
 import com.ibingbo.ilicense.exception.LicenseNotFoundException;
-import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Slf4j
 public class LicenseManager {
 
-    private final LicenseProperties properties;
+    private static final Logger log = LoggerFactory.getLogger(LicenseManager.class);
+
+    private final LicenseClientProperties properties;
     private final LicenseValidator validator;
-    private final ApplicationEventPublisher eventPublisher;
+    private final LicenseEventListener eventListener;
 
     private volatile LicenseInfo currentLicense;
 
-    public LicenseManager(LicenseProperties properties,
+    public LicenseManager(LicenseClientProperties properties,
                           LicenseValidator validator,
-                          ApplicationEventPublisher eventPublisher) {
+                          LicenseEventListener eventListener) {
         this.properties = properties;
         this.validator = validator;
-        this.eventPublisher = eventPublisher;
+        this.eventListener = eventListener == null ? LicenseEventListener.NO_OP : eventListener;
     }
 
-    @PostConstruct
     public void init() {
         if (!properties.isEnabled()) {
             log.info("license validation disabled");
@@ -45,9 +42,6 @@ public class LicenseManager {
         }
     }
 
-    /**
-     * 启动验证
-     */
     private void performStartupValidation() {
         try {
             loadLicenseFromFile();
@@ -68,18 +62,19 @@ public class LicenseManager {
         }
     }
 
-    private void handleNoLicense() throws LicenseNotFoundException {
-        log.warn("system not activated - please upload a license activation code to {}", properties.getApiPrefix() + "/activate");
+    private void handleNoLicense() {
+        log.warn("system not activated - please upload a license activation code to {}",
+                properties.getApiPrefix() + "/activate");
 
         if (!properties.isAllowStartWhenExpired()) {
             throw new LicenseNotFoundException("system not activated, startup failed");
         }
     }
 
-    private void handleExpiredLicense() throws LicenseExpiredException {
+    private void handleExpiredLicense() {
         log.error("license expired - expiry date: {}", currentLicense.getExpireAt());
 
-        eventPublisher.publishEvent(new LicenseExpiredEvent(currentLicense));
+        eventListener.onExpired(currentLicense);
 
         if (!properties.isAllowStartWhenExpired()) {
             throw new LicenseExpiredException("license expired, startup failed: " + currentLicense.getExpireAt());
@@ -99,18 +94,10 @@ public class LicenseManager {
     private void checkExpiryWarning() {
         if (currentLicense.getDaysLeft() <= properties.getExpiryWarningDays()) {
             log.warn("license will expire in {} days, please renew", currentLicense.getDaysLeft());
-
-            eventPublisher.publishEvent(new LicenseExpiringSoonEvent(
-                    currentLicense,
-                    currentLicense.getDaysLeft()
-            ));
+            eventListener.onExpiringSoon(currentLicense, currentLicense.getDaysLeft());
         }
     }
 
-    /**
-     * 定期检查License状态
-     * 由 SchedulingConfigurer 定时调用
-     */
     public void checkLicenseStatus() {
         if (currentLicense == null) {
             log.info("skipping check: not activated");
@@ -119,16 +106,13 @@ public class LicenseManager {
 
         if (currentLicense.isExpired()) {
             log.error("periodic check: license expired");
-            eventPublisher.publishEvent(new LicenseExpiredEvent(currentLicense));
+            eventListener.onExpired(currentLicense);
         } else {
             checkExpiryWarning();
         }
     }
 
-    /**
-     * 激活License
-     */
-    public LicenseInfo activate(String activationCode) throws LicenseException {
+    public LicenseInfo activate(String activationCode) {
         log.info("starting license activation");
 
         LicenseInfo license = validator.validate(activationCode);
@@ -140,7 +124,7 @@ public class LicenseManager {
         saveLicenseToFile(activationCode);
         this.currentLicense = license;
 
-        eventPublisher.publishEvent(new LicenseActivatedEvent(license));
+        eventListener.onActivated(license);
 
         log.info("license activated successfully: {}", license.getCustomerName());
 
@@ -159,7 +143,7 @@ public class LicenseManager {
         return currentLicense != null && currentLicense.hasModule(moduleName);
     }
 
-    public void checkLicense() throws LicenseException {
+    public void checkLicense() {
         if (currentLicense == null) {
             throw new LicenseNotFoundException("system not activated");
         }
@@ -168,16 +152,13 @@ public class LicenseManager {
         }
     }
 
-    public void checkModule(String moduleName) throws LicenseException {
+    public void checkModule(String moduleName) {
         checkLicense();
         if (!currentLicense.hasModule(moduleName)) {
             throw new LicenseException("unauthorized module: " + moduleName);
         }
     }
 
-    /**
-     * 从文件加载License
-     */
     private void loadLicenseFromFile() {
         try {
             if (!Files.exists(Paths.get(properties.getStoragePath()))) {
@@ -198,10 +179,7 @@ public class LicenseManager {
         }
     }
 
-    /**
-     * 保存License到文件
-     */
-    private void saveLicenseToFile(String activationCode) throws LicenseException {
+    private void saveLicenseToFile(String activationCode) {
         try {
             Path dir = Paths.get(properties.getStoragePath()).getParent();
             if (dir != null && !Files.exists(dir)) {
