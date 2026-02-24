@@ -2,8 +2,8 @@
   "groups": [
     {
       "name": "license",
-      "type": "com.ibingbo.ilicense.config.LicenseProperties",
-      "sourceType": "com.ibingbo.ilicense.config.LicenseProperties"
+      "type": "io.github.ebingbo.ilicense.config.LicenseProperties",
+      "sourceType": "io.github.ebingbo.ilicense.config.LicenseProperties"
     }
   ],
   "properties": [

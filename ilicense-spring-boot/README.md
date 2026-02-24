@@ -63,7 +63,7 @@ license:
 ### 1) 注解方式
 
 ```java
-import com.ibingbo.ilicense.annotation.RequireLicense;
+import annotation.io.github.ebingbo.ilicense.RequireLicense;
 
 @RequireLicense(module = "advanced-module")
 public void advancedFeature() {
@@ -74,7 +74,7 @@ public void advancedFeature() {
 ### 2) 编程式方式
 
 ```java
-import com.ibingbo.ilicense.core.LicenseManager;
+import core.io.github.ebingbo.ilicense.LicenseManager;
 
 public class BizService {
     private final LicenseManager licenseManager;
@@ -93,9 +93,9 @@ public class BizService {
 ## 事件监听示例
 
 ```java
-import com.ibingbo.ilicense.event.LicenseActivatedEvent;
-import com.ibingbo.ilicense.event.LicenseExpiredEvent;
-import com.ibingbo.ilicense.event.LicenseExpiringSoonEvent;
+import event.io.github.ebingbo.ilicense.LicenseActivatedEvent;
+import event.io.github.ebingbo.ilicense.LicenseExpiredEvent;
+import event.io.github.ebingbo.ilicense.LicenseExpiringSoonEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 

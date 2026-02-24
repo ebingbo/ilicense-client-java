@@ -4,12 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.ibingbo</groupId>
+        <groupId>io.github.ebingbo</groupId>
         <artifactId>ilicense-client-java</artifactId>
-        <version>0.0.1</version>
+        <version>0.1.0</version>
     </parent>
 
     <artifactId>ilicense-client</artifactId>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>ilicense-client</name>
@@ -42,6 +43,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <version>6.0.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

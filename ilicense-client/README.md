@@ -29,10 +29,11 @@
 ## 最小示例
 
 ```java
-import com.ibingbo.ilicense.config.LicenseClientProperties;
-import com.ibingbo.ilicense.core.LicenseManager;
-import com.ibingbo.ilicense.core.LicenseValidator;
-import com.ibingbo.ilicense.event.LicenseEventListener;
+import config.io.github.ebingbo.ilicense.LicenseClientProperties;
+import core.io.github.ebingbo.ilicense.LicenseManager;
+import io.github.ebingbo.ilicense.core.LicenseInfo;
+import io.github.ebingbo.ilicense.core.LicenseValidator;
+import event.io.github.ebingbo.ilicense.LicenseEventListener;
 
 public class Demo {
     public static void main(String[] args) {
@@ -48,12 +49,12 @@ public class Demo {
         LicenseValidator validator = new LicenseValidator(publicKey);
         LicenseEventListener listener = new LicenseEventListener() {
             @Override
-            public void onActivated(com.ibingbo.ilicense.core.LicenseInfo info) {
+            public void onActivated(core.io.github.ebingbo.ilicense.LicenseInfo info) {
                 System.out.println("license activated: " + info.getCustomerName());
             }
 
             @Override
-            public void onExpired(com.ibingbo.ilicense.core.LicenseInfo info) {
+            public void onExpired(core.io.github.ebingbo.ilicense.LicenseInfo info) {
                 System.err.println("license expired: " + info.getExpireAt());
             }
         };
